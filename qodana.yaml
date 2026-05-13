@@ -1,0 +1,18 @@
+version: "1.0"
+profile:
+   name: qodana.recommended
+
+bootstrap: |
+  ./gradlew test koverXmlReport --rerun-tasks
+  mkdir -p .qodana/code-coverage
+  cp build/reports/kover/report.xml .qodana/code-coverage/
+
+coverage:
+  reportProblems: false
+
+include:
+  - name: All
+exclude:
+  - name: All
+    paths:
+        - app-backend/src/main/kotlin/jooq

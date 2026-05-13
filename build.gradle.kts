@@ -2,6 +2,7 @@ plugins {
     application
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.kotlin.serialization)
+    id("org.jetbrains.kotlinx.kover") version "0.8.3"
 }
 
 application {
@@ -10,10 +11,6 @@ application {
 
 repositories {
     mavenCentral()
-}
-
-tasks.test {
-    useJUnitPlatform()
 }
 
 dependencies {
@@ -45,4 +42,21 @@ dependencies {
     testImplementation(libs.mockk)
     testImplementation(libs.junit.jupiter)
     testRuntimeOnly(libs.junit.platform.launcher)
+}
+
+tasks.test {
+    useJUnitPlatform()
+}
+
+kover {
+    reports {
+        total {
+            xml {
+                onCheck = false
+            }
+        }
+    }
+    merge {
+        allProjects()
+    }
 }
